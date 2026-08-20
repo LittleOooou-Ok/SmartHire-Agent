@@ -1,0 +1,43 @@
+# Web 框架
+fastapi>=0.115.0
+uvicorn[standard]>=0.34.0
+python-multipart>=0.0.9
+
+# LangGraph + LangChain
+langgraph>=0.2.0
+langchain>=0.3.0
+langchain-core>=0.3.0
+
+# LLM (OpenAI 兼容接口 — 支持 DeepSeek / Qwen / GPT)
+openai>=1.0.0
+
+# SQLite (async)
+aiosqlite>=0.20.0
+
+# Pydantic
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+
+# 文件解析（pandoc 需系统安装：apt install pandoc / brew install pandoc）
+pdfplumber>=0.11.0
+python-docx>=1.1.0
+
+# Twilio (语音通话 — 可选)
+twilio>=9.0.0
+
+# HTTP 客户端
+httpx>=0.27.0
+aiofiles>=24.0.0
+
+# 重试逻辑
+tenacity>=9.0.0
+
+# 日志
+structlog>=24.0.0
+python-json-logger>=2.0.0
+
+# 邮件 (标准库 smtplib，无需额外依赖)
+
+# 工具
+python-dotenv>=1.0.0
+python-dateutil>=2.9.0

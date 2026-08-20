@@ -1,0 +1,54 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+logs/*
+!logs/.gitkeep
+
+# SQLite 数据库
+data/*.db
+data/uploads/*
+!data/.gitkeep
+!data/uploads/.gitkeep
+
+# Generated audio (TTS cache)
+static/audio/*
+!static/.gitkeep
+!static/audio/.gitkeep
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Generated HTML run logs
+run_log_*.html
+*.html
+!frontend/index.html
