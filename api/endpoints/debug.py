@@ -18,7 +18,7 @@ _MOCK_SCHEDULING = [
     {
         "candidate_id": "debug_cand_001",
         "name": "Aditya Kumar",
-        "email": "sanath.anantha08@gmail.com",
+        "email": "candidate@example.com",
         "phone": "+91-9876543210",
         "status": "scheduled",
         "scheduled_slot": "Monday, June 2, 2026 10:00 AM – 11:00 AM IST",
@@ -27,7 +27,7 @@ _MOCK_SCHEDULING = [
     {
         "candidate_id": "debug_cand_002",
         "name": "Priya Sharma",
-        "email": "sanath.anantha07@gmail.com",
+        "email": "hr@example.com",
         "phone": "+91-9123456789",
         "status": "scheduled",
         "scheduled_slot": "Tuesday, June 3, 2026 2:00 PM – 3:00 PM IST",
