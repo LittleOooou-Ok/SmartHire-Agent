@@ -1227,17 +1227,22 @@ function renderScreening() {
 }
 
 // ─── Scheduling ───────────────────────────────────────────────────────────
+let _schedulingApproved = false;
+
 function renderScheduling() {
-  // 模拟模式：2 秒后自动进入下一步
-  setTimeout(async () => {
-    try {
-      await fetch(`/api/hitl/${S.sessionId}/pre-screening`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ decision: 'approved' }),
-      });
-    } catch (_) {}
-  }, 2000);
+  // 只触发一次自动批准
+  if (!_schedulingApproved) {
+    _schedulingApproved = true;
+    setTimeout(async () => {
+      try {
+        await fetch(`/api/hitl/${S.sessionId}/pre-screening`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ decision: 'approved' }),
+        });
+      } catch (_) {}
+    }, 2000);
+  }
 
   return `
   <div class="agent-stage">
@@ -1747,7 +1752,7 @@ function newSession() {
   stopPolling();
   S.sessionId = null; S.status = null; S.callDetails = null; S.view = 'upload'; S.onboardingSubmitted = false;
   Conv.active = false; Conv.results = []; Conv.candidatesQueue = [];
-  _rejectFeedback = {}; _fbVisible = {};
+  _rejectFeedback = {}; _fbVisible = {}; _schedulingApproved = false;
   localStorage.removeItem('hr_session_id');
   jdFile = null; resumeFiles = [];
   const chip = document.getElementById('session-chip');
@@ -2189,7 +2194,7 @@ document.addEventListener('input', (e) => {
 
 <!-- Cold start tip -->
 <div class="cold-tip">
-  免费实例 15 分钟无请求后休眠，首次请求需要 30-60 秒冷启动
+  免费实例 15 分钟无请求后休眠，首次请求需要 30-60 秒冷启动，期间页面可能无响应
 </div>
 
 </body>
