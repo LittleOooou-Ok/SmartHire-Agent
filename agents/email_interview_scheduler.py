@@ -161,6 +161,26 @@ class EmailInterviewSchedulerAgent(BaseAgent):
             candidate_count=len(pre_screening_results),
         )
 
+        # 检查是否配置了飞书或邮件，未配置则直接跳过
+        feishu_ok = bool(_settings.feishu_app_id and _settings.feishu_app_secret and _settings.feishu_user_id)
+        smtp_ok = bool(_settings.smtp_sender_email and _settings.smtp_auth_code)
+
+        if not feishu_ok and not smtp_ok:
+            logger.info("scheduler_skip", reason="feishu_and_smtp_not_configured")
+            scheduling_results = []
+            for candidate in pre_screening_results:
+                scheduling_results.append(self._result(
+                    candidate.get("candidate_id", ""),
+                    candidate.get("name", ""),
+                    candidate.get("email", ""),
+                    "no_slots",
+                ))
+            return {
+                "email_scheduling_results": scheduling_results,
+                "tokens_in": 0,
+                "tokens_out": 0,
+            }
+
         loop = asyncio.get_event_loop()
         scheduling_results: list[dict] = []
 

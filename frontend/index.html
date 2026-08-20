@@ -1228,15 +1228,23 @@ function renderScreening() {
 
 // ─── Scheduling ───────────────────────────────────────────────────────────
 function renderScheduling() {
+  // 模拟模式：2 秒后自动进入下一步
+  setTimeout(async () => {
+    try {
+      await fetch(`/api/hitl/${S.sessionId}/pre-screening`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ decision: 'approved' }),
+      });
+    } catch (_) {}
+  }, 2000);
+
   return `
   <div class="agent-stage">
     <div class="glow-ring">AI</div>
-    <div class="agent-pill"><div class="agent-pill-dot"></div>智能体运行中</div>
-    <div class="agent-title">面试安排智能体</div>
-    <div class="agent-desc">正在查询飞书日历空闲时段，为候选人和面试官创建面试日程并发送确认邮件…</div>
-    <div style="background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.15);border-radius:8px;padding:12px 16px;margin-top:16px;font-size:12px;color:rgba(250,204,21,0.7);text-align:left;max-width:500px;margin-left:auto;margin-right:auto">
-      <strong>提示：</strong>如需自动创建日历事件，需本地部署后配置飞书应用（FEISHU_APP_ID、FEISHU_APP_SECRET、FEISHU_USER_ID）。当前为模拟模式。
-    </div>
+    <div class="agent-pill"><div class="agent-pill-dot"></div>处理中</div>
+    <div class="agent-title">面试安排</div>
+    <div class="agent-desc">正在安排面试日程…</div>
   </div>`;
 }
 
