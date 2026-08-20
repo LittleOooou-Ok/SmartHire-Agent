@@ -1228,20 +1228,27 @@ function renderScreening() {
 
 // ─── Scheduling ───────────────────────────────────────────────────────────
 let _schedulingApproved = false;
+let _schedulingCountdown = 3;
 
 function renderScheduling() {
-  // 只触发一次自动批准
+  // 只触发一次倒计时
   if (!_schedulingApproved) {
     _schedulingApproved = true;
-    setTimeout(async () => {
-      try {
-        await fetch(`/api/hitl/${S.sessionId}/pre-screening`, {
+    _schedulingCountdown = 3;
+
+    const countdownTimer = setInterval(() => {
+      _schedulingCountdown--;
+      const el = document.getElementById('scheduling-countdown');
+      if (el) el.textContent = _schedulingCountdown > 0 ? `${_schedulingCountdown} 秒后自动进入下一步` : '正在跳转...';
+      if (_schedulingCountdown <= 0) {
+        clearInterval(countdownTimer);
+        fetch(`/api/hitl/${S.sessionId}/pre-screening`, {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({ decision: 'approved' }),
-        });
-      } catch (_) {}
-    }, 2000);
+        }).catch(() => {});
+      }
+    }, 1000);
   }
 
   return `
@@ -1253,6 +1260,7 @@ function renderScheduling() {
     <div style="background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.15);border-radius:8px;padding:12px 16px;margin-top:16px;font-size:12px;color:rgba(250,204,21,0.7);text-align:left;max-width:500px;margin-left:auto;margin-right:auto">
       提示：如需自动创建日历事件，需本地部署后配置飞书应用（FEISHU_APP_ID、FEISHU_APP_SECRET、FEISHU_USER_ID）。当前为模拟模式。
     </div>
+    <p id="scheduling-countdown" style="margin-top:16px;font-size:13px;color:var(--muted2)">3 秒后自动进入下一步</p>
   </div>`;
 }
 
