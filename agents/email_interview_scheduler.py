@@ -12,6 +12,9 @@ import asyncio
 import datetime
 import re
 from functools import partial
+from config.settings import get_settings
+
+_settings = get_settings()
 
 from agents.base import BaseAgent
 from tools.calendar_tools import check_slot_free, create_calendar_event

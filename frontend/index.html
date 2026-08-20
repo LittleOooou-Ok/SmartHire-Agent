@@ -1548,7 +1548,7 @@ async function startScreeningWithAnimation() {
   stopPolling();
 
   // 等待 6 秒模拟拨打过程
-  await new Promise(r => setTimeout(r, 6000));
+  await new Promise(r => setTimeout(r, 3000));
 
   try {
     // 1. 先生成模拟数据（保存到数据库）
